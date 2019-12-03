@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         console.log("hello");
         
-        console.log("goodbye");
 
 
 
@@ -129,3 +128,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 });
+ 
