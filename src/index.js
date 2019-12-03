@@ -77,9 +77,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         this.physics.add.collider(player, platforms);
 
-
-
-
+        console.log("hello");
 
 
 
@@ -90,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     function update() {
         if (cursors.left.isDown) {
-            player.setVelocityX(-1000);
+            player.setVelocityX(-160);
 
             player.anims.play('left', true);
         }
