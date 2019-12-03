@@ -78,6 +78,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         this.physics.add.collider(player, platforms);
 
         console.log("hello");
+        
+        console.log("goodbye");
 
 
 
