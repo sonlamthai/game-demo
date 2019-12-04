@@ -26,13 +26,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
     var cursors;
     var score = 0;
     var scoreText;
-    var click;
+    
 
     var game = new Phaser.Game(config);
 
     function preload() {
         this.load.image('background', 'src/assets/BG.png');
-        this.load.image('cactus', 'src/assets/Cactus (2).png');
+        this.load.image('cactu', 'src/assets/Cactus (2).png');
         this.load.image('tile', 'src/assets/Tile (13).png');
         this.load.image('tree', 'src/assets/Tree.png');
         this.load.spritesheet('dude', 'src/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         player.setCollideWorldBounds(true);
 
         cactus = this.physics.add.group({
-            key: 'cactus',
+            key: 'cactu',
             repeat: 8,
             setXY: { x: 12, y: 0, stepX: 100 }
         });
@@ -66,11 +66,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         });
 
+        trees = this.physics.add.group();
+
         // cactus.setCollideWorldBounds(true);
-
-
-
-
 
         this.anims.create({
             key: 'left',
@@ -95,21 +93,28 @@ document.addEventListener("DOMContentLoaded", function (event) {
         });
 
         cursors = this.input.keyboard.createCursorKeys();
-        
-        
+
+
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(cactus, platforms);
+        // this.physics.add.collider(trees, platforms);
 
 
         this.physics.add.overlap(player, cactus, collectCactus, null, this);
+        this.physics.add.collider(player, trees, hitTrees, null, this);
 
         scoreText = this.add.text(320, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
-       
 
-        console.log("hello");
-        
+        click = this.input.on('poiterdown', function () {
+            console.log("hello");
+
+
+        })
+
+
+
 
 
 
@@ -118,14 +123,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-    function update() {
+    function update () {
+
+        // if (gameOver) {
+        //     return;
+        // }
 
         if (cursors.left.isDown) {
-<<<<<<< HEAD
             player.setVelocityX(-600);
-=======
-            player.setVelocityX(-160);
->>>>>>> 807894abfe7bb6af5abd7ea017827c845d9ffd15
 
             player.anims.play('left', true);
         }
@@ -155,10 +160,39 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
 
-    function collectCactus(player, cactus) {
-        cactus.disableBody(true, true);
+    function collectCactus(player, cactu) {
+        cactu.disableBody(true, true);
         score += 1;
         scoreText.setText('Score: ' + score);
+
+
+        if (cactus.countActive(true) === 0) {
+            cactus.children.iterate(function (child) {
+
+                child.enableBody(true, child.x, 0, true, true);
+
+            });
+
+            var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+            var tree = trees.create(x, 16, 'tree');
+            tree.setBounce(1);
+            tree.setCollideWorldBounds(true);
+            tree.setVelocity(Phaser.Math.Between(-200, 200), 20);
+
+
+        }
+
+    }
+
+    function hitTrees(player, trees) {
+        this.physics.pause();
+
+        player.setTint(0xff0000);
+
+        player.anims.play('turn');
+
+        gameOver = true;
     }
 
 
@@ -178,4 +212,3 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 });
- 
