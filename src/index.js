@@ -108,9 +108,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
        
 
-
-
-
+        console.log("hello");
+        
 
 
 
@@ -122,7 +121,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function update() {
 
         if (cursors.left.isDown) {
+<<<<<<< HEAD
             player.setVelocityX(-600);
+=======
+            player.setVelocityX(-160);
+>>>>>>> 807894abfe7bb6af5abd7ea017827c845d9ffd15
 
             player.anims.play('left', true);
         }
@@ -175,3 +178,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 });
+ 
