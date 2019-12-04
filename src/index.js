@@ -42,9 +42,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         this.add.image(200, 300, 'background');
 
         platforms = this.physics.add.staticGroup();
-        platforms.create(128, 700, 'tile').setScale(6, 1);
-        platforms.create(675, 500, 'tile');
-        platforms.create(128, 325, 'tile');
+        platforms.create(128, 700, 'tile').setScale(6, 1).refreshBody();
+
+        platforms.create(675, 390, 'tile');
+        platforms.create(128, 245, 'tile');
 
         player = this.physics.add.sprite(100, 450, "dude");
 
@@ -54,32 +55,28 @@ document.addEventListener("DOMContentLoaded", function (event) {
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-            frameRate: 1,
+            frameRate: 10,
             repeat: -1
         });
 
         this.anims.create({
             key: 'turn',
-            frame: [{ key: 'dude', frame: 4 }],
+            frames: [ { key: 'dude', frame: 4 } ],
             frameRate: 20
         });
-
-        // player.anims.play('left', true);
-
+        
+        // player.anims.play('turn');
+        
         this.anims.create({
             key: 'right',
             frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
             frameRate: 10,
             repeat: -1
         });
-
+        
         cursors = this.input.keyboard.createCursorKeys();
 
         this.physics.add.collider(player, platforms);
-
-
-
-
 
 
 
@@ -88,27 +85,28 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-    function update() {
+    function update () {
+
         if (cursors.left.isDown) {
-            player.setVelocityX(-1000);
+            player.setVelocityX(-160);
 
             player.anims.play('left', true);
         }
-        // else if (cursors.right.isDown) {
-        //     player.setVelocityX(1000);
 
-        //     player.anims.play('right', true);
-        // }
-        // else {
+        else if (cursors.right.isDown) {
+            player.setVelocityX(160);
 
-        //     player.setVelocityX(0);
-        //     player.anims.play('turn');
-        // }
+            player.anims.play('right', true);
+        }
+        else {
 
-        // if (cursors.up.isDown && player.body.touching.down) {
-        //     player.setVelocityY(-600);
-        // }
+            player.setVelocityX(0);
+            player.anims.play('turn');
+        }
 
+        if (cursors.up.isDown && player.body.touching.down) {
+            player.setVelocityY(-600);
+        }
 
     }
 
